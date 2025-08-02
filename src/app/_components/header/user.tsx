@@ -1,13 +1,10 @@
 "use client";
 
-import type { FC, MouseEventHandler } from "react"; // 只导入类型
-
-import { deleteCookie } from "cookies-next";
 import { isNil } from "lodash";
 import { User } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { Suspense, useCallback } from "react";
+import { useRouter } from "next/navigation";
+import { type FC, type MouseEventHandler, Suspense, useCallback } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/app/_components/shadcn/ui/avatar";
 import {
@@ -20,13 +17,14 @@ import {
 } from "@/app/_components/shadcn/ui/dropdown-menu";
 import { cn } from "@/app/_components/shadcn/utils";
 import { fetchApi } from "@/libs/api";
+import { deleteCookie } from "@/libs/cookies";
 import { ACCESS_TOKEN_COOKIE_NAME } from "@/libs/token";
 
 import { useAuth, useSetAuth } from "../auth/hooks";
 import { useToast } from "../shadcn/hooks/use-toast";
 import { Button as CNButton } from "../shadcn/ui/button";
 import UserAvatar from "./avatar.jpg";
-import $styles from "./ user.module.css"; // 修复路径空格
+import $styles from "./ user.module.css";
 
 export const LoginButton: FC<{ iconBtn?: boolean }> = ({ iconBtn }) => {
   return (
@@ -49,34 +47,6 @@ export const LoginButton: FC<{ iconBtn?: boolean }> = ({ iconBtn }) => {
 
 export const UserAction: FC<{ iconBtn?: boolean }> = ({ iconBtn }) => {
   const auth = useAuth();
-  return (
-    <div className={cn($styles.user)}>
-      {isNil(auth) ? (
-        <Suspense>
-          <LoginButton iconBtn={iconBtn} />
-        </Suspense>
-      ) : (
-        <DropdownMenu modal={false}>
-          <DropdownMenuTrigger asChild>
-            <Avatar className={$styles.avatar}>
-              <AvatarImage src={UserAvatar.src} />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="center" className="tw-w-56 tw-text-center tw-text-stone-500">
-            <DropdownMenuLabel className="tw-justify-center">我的账户</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Link href="#">退出登录</Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )}
-    </div>
-  );
-};
-
-export const HeaderUser: FC = () => {
   const setAuth = useSetAuth();
   const router = useRouter();
   const { toast } = useToast();
@@ -98,17 +68,33 @@ export const HeaderUser: FC = () => {
         });
       }
     },
-    [toast, router, setAuth]
+    [toast]
   );
   return (
     <div className={cn($styles.user)}>
-      {/* ... */}
-      <DropdownMenuItem>
-        <Link href="#" onClick={loginOut}>
-          退出登录
-        </Link>
-      </DropdownMenuItem>
-      {/* ... */}
+      {isNil(auth) ? (
+        <Suspense>
+          <LoginButton iconBtn={iconBtn} />
+        </Suspense>
+      ) : (
+        <DropdownMenu modal={false}>
+          <DropdownMenuTrigger asChild>
+            <Avatar className={$styles.avatar}>
+              <AvatarImage src={UserAvatar.src} />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="center" className="tw-w-56 tw-text-center tw-text-stone-500">
+            <DropdownMenuLabel className="tw-justify-center">我的账户</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <Link href="#" onClick={loginOut}>
+                退出登录
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )}
     </div>
   );
 };

@@ -1,4 +1,3 @@
-//完成
 import type { RouteConfig, RouteHandler } from "@hono/zod-openapi";
 import type { Context, Next } from "hono";
 

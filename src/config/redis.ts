@@ -1,11 +1,3 @@
-// src/config/redis.ts
-import type { RedisOptions } from "ioredis";
+import { Redis } from "ioredis";
 
-import { parseInt } from "lodash";
-export const redisConfig: RedisOptions = {
-  host: process.env.REDIS_URL || "localhost",
-  port: parseInt(process.env.REDIS_PORT || "6379"),
-  password: process.env.REDIS_PASSWORD || undefined,
-  db: parseInt(process.env.REDIS_DB || "0"),
-  keyPrefix: "nextapp:",
-};
+export const redisConfig = new Redis(process.env.REDIS_URL!);
