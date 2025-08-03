@@ -8,7 +8,3 @@
 html:global(.dark) .layout {
   @apply tw-bg-[url(../styles/images/bg-dark.jpg)];
 }
-
-main {
-  @apply tw-pt-20;
-}
