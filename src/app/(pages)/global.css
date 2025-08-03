@@ -13,3 +13,8 @@ code[class*="language-"],
 pre[class*="language-"] {
   color: red; /* 测试用 */
 }
+
+main {
+  @apply tw-pt-20;
+}
+
