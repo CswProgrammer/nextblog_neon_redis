@@ -1,6 +1,6 @@
 /* src/app/_components/header/styles.module.css */
 .header {
-  @apply tw-fixed tw-top-0 tw-w-full tw-z-40  tw-mt-0 tw-bg-white/40 dark:tw-bg-zinc-900/10 tw-transition-[background-color] tw-ease-in-out tw-duration-300;
+  @apply tw-fixed tw-top-0 tw-w-full tw-z-[1000] tw-mt-0 tw-bg-white/40 dark:tw-bg-zinc-900/10 tw-transition-[background-color] tw-ease-in-out tw-duration-300;
 }
 
 .header-scrolled {
