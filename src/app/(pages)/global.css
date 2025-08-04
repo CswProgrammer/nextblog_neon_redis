@@ -15,6 +15,6 @@ pre[class*="language-"] {
 }
 
 main {
-  @apply tw-pt-20;
+  @apply tw-pt-[120px];
 }
 
